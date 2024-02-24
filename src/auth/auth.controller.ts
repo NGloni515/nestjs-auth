@@ -41,7 +41,6 @@ export class AuthController {
 
   // @Roles('customer') // role validation
   @UseGuards(AuthGuard(['jwt', 'api-keys']), RoleGuard)
-  // @UseGuards(JwtAuthGuard, RoleGuard, ApiKeysGuard)
   @Get('profile')
   getProfile(@Req() req) {
     return req.user;
