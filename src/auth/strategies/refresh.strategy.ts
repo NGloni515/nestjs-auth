@@ -20,7 +20,6 @@ export class JwtRefreshStrategy extends PassportStrategy(
   }
 
   async validate(payload: JwtPayload): Promise<JwtPayload> {
-    console.log('payload ===========');
     const res: JwtPayload = {
       sub: payload.sub,
       name: payload.name,

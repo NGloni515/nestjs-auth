@@ -11,6 +11,8 @@ import { JwtPayload, JwtSign } from './auth.interface';
 import { Request } from 'express';
 import { Roles } from './decorators/role.decorator';
 import { RoleGuard } from './guards/role.guard';
+import { ApiKeysGuard } from './guards/api-keys.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -37,8 +39,9 @@ export class AuthController {
     return this.authService.login(req.user as JwtPayload);
   }
 
-  @Roles('customer') // role validation
-  @UseGuards(JwtAuthGuard, RoleGuard)
+  // @Roles('customer') // role validation
+  @UseGuards(AuthGuard(['jwt', 'api-keys']), RoleGuard)
+  // @UseGuards(JwtAuthGuard, RoleGuard, ApiKeysGuard)
   @Get('profile')
   getProfile(@Req() req) {
     return req.user;

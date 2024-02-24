@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategies';
 import { JwtRefreshStrategy } from './strategies/refresh.strategy';
+import { ApiKeysStrategy } from './strategies/api-keys.strategy';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { JwtRefreshStrategy } from './strategies/refresh.strategy';
     LocalStrategy,
     JwtStrategy,
     JwtRefreshStrategy,
+    ApiKeysStrategy,
   ],
 })
 export class AuthModule {}

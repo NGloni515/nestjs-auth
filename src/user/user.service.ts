@@ -2,6 +2,8 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { hash } from 'bcrypt';
+import { UserDto } from './dto/user.dto';
+import { UserNotFoundException } from './exceptions/user.exception';
 
 @Injectable()
 export class UsersService {
@@ -47,6 +49,24 @@ export class UsersService {
     });
 
     if (!user) throw new ConflictException('user not found');
+
+    return user;
+  }
+
+  public async findOneByApiKey(
+    keyId: string,
+    keySecret: string,
+  ): Promise<UserDto> {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        apiKeyId: keyId,
+        apiKeySecret: keySecret,
+      },
+    });
+
+    if (!user) {
+      throw new UserNotFoundException();
+    }
 
     return user;
   }

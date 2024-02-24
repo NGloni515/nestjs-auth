@@ -4,7 +4,7 @@ export interface JwtSign {
 }
 
 export interface JwtPayload {
-  sub: string;
+  sub: number;
   email: string;
   name: string;
 }
